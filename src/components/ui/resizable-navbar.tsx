@@ -253,7 +253,7 @@ export const NavbarLogo = ({ visible: propVisible }: { visible?: boolean }) => {
             animate={{ opacity: 1, width: "auto" }}
             exit={{ opacity: 0, width: 0 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="overflow-hidden whitespace-nowrap font-syncopate font-bold text-primary text-3xl tracking-[-0.15em]"
+            className="overflow-hidden whitespace-nowrap font-syncopate font-bold text-primary text-3xl tracking-[-0.09em] leading-normal py-0.5 pr-2"
           >
             cellae
           </motion.span>
