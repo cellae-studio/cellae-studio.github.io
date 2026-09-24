@@ -8,8 +8,10 @@ import {
   useMotionValueEvent,
 } from "motion/react";
 
-import React, { useRef, useState } from "react";
+import React, { createContext, useContext, useRef, useState } from "react";
 
+const NavbarContext = createContext<{ visible: boolean }>({ visible: false });
+export const useNavbar = () => useContext(NavbarContext);
 
 interface NavbarProps {
   children: React.ReactNode;
@@ -62,18 +64,20 @@ export const Navbar = ({ children, className }: NavbarProps) => {
   });
 
   return (
-    <motion.div
-      className={cn("fixed inset-x-0 top-0 z-50 w-full pt-4 pointer-events-none", className)}
-    >
-      {React.Children.map(children, (child) =>
-        React.isValidElement(child)
-          ? React.cloneElement(
-              child as React.ReactElement<{ visible?: boolean }>,
-              { visible },
-            )
-          : child,
-      )}
-    </motion.div>
+    <NavbarContext.Provider value={{ visible }}>
+      <motion.div
+        className={cn("fixed inset-x-0 top-0 z-50 w-full pt-4 pointer-events-none", className)}
+      >
+        {React.Children.map(children, (child) =>
+          React.isValidElement(child)
+            ? React.cloneElement(
+                child as React.ReactElement<{ visible?: boolean }>,
+                { visible },
+              )
+            : child,
+        )}
+      </motion.div>
+    </NavbarContext.Provider>
   );
 };
 
@@ -228,20 +232,33 @@ export const MobileNavToggle = ({
   );
 };
 
-export const NavbarLogo = () => {
+export const NavbarLogo = ({ visible: propVisible }: { visible?: boolean }) => {
+  const { visible: contextVisible } = useNavbar();
+  const visible = propVisible ?? contextVisible;
+
   return (
     <a
       href="/"
-      className="relative z-20 flex items-center space-x-2 px-2 py-1 text-sm"
+      className="relative z-20 flex items-center gap-2 px-2 py-1 text-sm"
     >
       <img
         src="/logo.svg"
         alt="logo"
-        className="size-12"
+        className="size-12 shrink-0"
       />
-      <span className="font-syncopate font-bold text-primary text-3xl tracking-[-0.15em]">
-        cellae
-      </span>
+      <AnimatePresence initial={false}>
+        {!visible && (
+          <motion.span
+            initial={{ opacity: 0, width: 0 }}
+            animate={{ opacity: 1, width: "auto" }}
+            exit={{ opacity: 0, width: 0 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="overflow-hidden whitespace-nowrap font-syncopate font-bold text-primary text-3xl tracking-[-0.15em]"
+          >
+            cellae
+          </motion.span>
+        )}
+      </AnimatePresence>
     </a>
   );
 };
