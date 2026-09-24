@@ -37,11 +37,11 @@ export default function RootLayout({
         syncopate.variable
       )}
     >
-      <body>
+      <body className="min-h-screen overflow-x-hidden">
         <ThemeProvider>
           <Navbar />
-          <main className="flex min-h-svh w-full justify-center p-6">
-            <div className="mx-auto flex w-full max-w-7xl min-w-0 flex-col gap-4 text-sm leading-loose">
+          <main className="flex min-h-svh w-full flex-col items-center justify-start overflow-x-clip">
+            <div className="flex w-full min-w-0 flex-col text-sm leading-loose">
               {children}
             </div>
           </main>
