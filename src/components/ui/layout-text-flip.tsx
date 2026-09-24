@@ -1,26 +1,28 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { cn } from "@/lib/utils";
+"use client"
+import React, { useEffect, useState } from "react"
+
+import { cn } from "@/lib/utils"
+
+import { AnimatePresence, motion } from "motion/react"
 
 export const LayoutTextFlip = ({
   text = "cellae",
   words = ["Objects", "Spaces", "Identity"],
   duration = 3000,
 }: {
-  text: string;
-  words: string[];
-  duration?: number;
+  text: string
+  words: string[]
+  duration?: number
 }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % words.length);
-    }, duration);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % words.length)
+    }, duration)
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <>
@@ -54,5 +56,5 @@ export const LayoutTextFlip = ({
         </AnimatePresence>
       </motion.span>
     </>
-  );
-};
+  )
+}

@@ -1,27 +1,29 @@
-"use client";
+"use client"
 
-import React from "react";
-import { motion, useScroll, useTransform, useSpring } from "motion/react";
-import { ArrowUp } from "lucide-react";
-import { InstagramIcon, GithubIcon } from "../util/icons";
+import React from "react"
+
+import { GithubIcon, InstagramIcon } from "../util/icons"
+
+import { ArrowUp } from "lucide-react"
+import { motion, useScroll, useSpring, useTransform } from "motion/react"
 
 export function Footer() {
-  const containerRef = React.useRef<HTMLDivElement>(null);
+  const containerRef = React.useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end end"],
-  });
+  })
 
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001,
-  });
+  })
 
   // Keep bottom brand section hidden normally, reveal only when scrolled towards the bottom
-  const scale = useTransform(smoothProgress, [0.35, 0.95], [0.8, 1]);
-  const opacity = useTransform(smoothProgress, [0.35, 0.85], [0, 1]);
-  const y = useTransform(smoothProgress, [0.35, 0.95], [100, 0]);
+  const scale = useTransform(smoothProgress, [0.35, 0.95], [0.8, 1])
+  const opacity = useTransform(smoothProgress, [0.35, 0.85], [0, 1])
+  const y = useTransform(smoothProgress, [0.35, 0.95], [100, 0])
 
   return (
     <footer
@@ -39,7 +41,9 @@ export function Footer() {
       <div className="container mx-auto flex flex-col items-center justify-center px-4">
         {/* Top Bar: Copyright and Socials - visible normally */}
         <div className="flex w-full max-w-5xl flex-col items-center justify-between gap-4 pb-12 text-xs text-muted-foreground sm:flex-row">
-          <p>© {new Date().getFullYear()} cellae studio. All rights reserved.</p>
+          <p>
+            © {new Date().getFullYear()} cellae studio. All rights reserved.
+          </p>
 
           <div className="flex items-center gap-6">
             <a
@@ -107,5 +111,5 @@ export function Footer() {
         </motion.div>
       </div>
     </footer>
-  );
+  )
 }

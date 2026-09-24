@@ -1,9 +1,10 @@
 "use client"
 
 import React, { type ComponentPropsWithoutRef } from "react"
-import { motion, type Transition, type Variants } from "motion/react"
 
 import { cn } from "@/lib/utils"
+
+import { type Transition, type Variants, motion } from "motion/react"
 
 interface SpinningTextProps extends ComponentPropsWithoutRef<"div"> {
   children: string | string[]

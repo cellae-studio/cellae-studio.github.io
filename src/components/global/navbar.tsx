@@ -1,9 +1,5 @@
-"use client";
-import {
-  Navbar,
-  NavBody,
-  NavbarLogo,
-} from "@/components/ui/resizable-navbar";
+"use client"
+import { NavBody, Navbar, NavbarLogo } from "@/components/ui/resizable-navbar"
 
 export function NavbarDemo() {
   return (
@@ -12,5 +8,5 @@ export function NavbarDemo() {
         <NavbarLogo />
       </NavBody>
     </Navbar>
-  );
+  )
 }

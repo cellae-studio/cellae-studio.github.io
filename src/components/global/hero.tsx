@@ -180,10 +180,10 @@ export function AnimatedBeamDemo() {
       {/* Outer Card with subtle glassmorphism */}
       <div
         ref={containerRef}
-        className="relative flex min-h-105 w-full flex-col items-center justify-between overflow-hidden bg-background/40 p-8 backdrop-blur-xl md:p-12"
+        className="relative flex min-h-105 w-full flex-col items-center justify-between overflow-hidden  p-8  md:p-12"
       >
         {/* Subtle grid pattern background */}
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(120,130,150,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(120,130,150,0.06)_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,black,transparent)]" />
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(120,130,150,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(120,130,150,0.06)_1px,transparent_1px)] bg-size-[32px_32px] mask-[radial-gradient(ellipse_60%_50%_at_50%_50%,black,transparent)]" />
 
         {/* Section Header Tag */}
         <div className="mb-6 flex items-center gap-2 rounded-full border border-border/60 bg-card/60 px-3.5 py-1 text-md font-medium text-muted-foreground backdrop-blur-md">

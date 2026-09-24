@@ -1,9 +1,12 @@
 "use client"
 
 import React, { useRef } from "react"
-import { motion, useScroll, useSpring, useTransform } from "motion/react"
-import patternColumns from "./brand-pattern-data.json"
+
 import { cn } from "@/lib/utils"
+
+import patternColumns from "./brand-pattern-data.json"
+
+import { motion, useScroll, useSpring, useTransform } from "motion/react"
 
 // Flatten all 40 paths from the 10 columns
 const allPaths: string[] = patternColumns.flat()
