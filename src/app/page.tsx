@@ -1,12 +1,12 @@
-import { Footer } from "@/components/global/footer"
+"use client"
+import { BrandPattern } from "@/components/global/brand-pattern"
 import { Hero } from "@/components/global/hero"
 
 export default function Page() {
   return (
     <>
       <Hero />
-      <div className="min-h-[100vh]"></div>
-      <Footer />
+      <BrandPattern />
     </>
   )
 }

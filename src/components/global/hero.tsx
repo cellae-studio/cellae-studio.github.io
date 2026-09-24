@@ -1,23 +1,74 @@
 "use client"
 
-import React, { forwardRef, useRef } from "react"
-import { motion } from "motion/react"
-import {
-  Boxes,
-  Cpu,
-  Globe,
-  Layers,
-  Lightbulb,
-  Sparkles,
-} from "lucide-react"
+import React, { forwardRef, useEffect, useRef, useState } from "react"
 
 import { AnimatedBeam } from "@/components/ui/animated-beam"
 import { cn } from "@/lib/utils"
+
 import { LampContainer } from "../ui/lamp"
+import { SpinningText } from "../ui/spinning-text"
+
+import { Boxes, Cpu, Globe, Layers, Lightbulb, Sparkles } from "lucide-react"
+import { motion, useScroll, useSpring, useTransform } from "motion/react"
 
 export function Hero() {
+  const { scrollY } = useScroll()
+  const [isFooterVisible, setIsFooterVisible] = useState(false)
+
+  // Scroll-based rotation with spring inertia
+  const scrollRotate = useTransform(scrollY, [0, 1000], [0, 360])
+  const smoothRotate = useSpring(scrollRotate, { stiffness: 140, damping: 24 })
+
+  // Scale down smoothly as user scrolls down the page
+  const scrollScale = useTransform(scrollY, [0, 400], [1, 0.72])
+  const smoothScale = useSpring(scrollScale, { stiffness: 140, damping: 24 })
+
+  // Detect when footer enters the viewport and hide SpinningText
+  useEffect(() => {
+    const footer = document.querySelector("footer")
+    if (!footer) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsFooterVisible(entry.isIntersecting)
+      },
+      {
+        root: null,
+        threshold: 0.05,
+      }
+    )
+
+    observer.observe(footer)
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <div className="relative w-full">
+      {/* Scroll-Reactive Spinning Badge (Fixed Bottom Right, hides at footer) */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{
+          opacity: isFooterVisible ? 0 : 1,
+          scale: isFooterVisible ? 0.5 : 1,
+          pointerEvents: isFooterVisible ? "none" : "auto",
+        }}
+        transition={{ duration: 0.35, ease: "easeInOut" }}
+        className="fixed bottom-6 right-6 z-40 flex select-none items-center justify-center md:bottom-8 md:right-8"
+      >
+        {/* Inner Rotating & Scaling Container */}
+        <motion.div
+          style={{ rotate: smoothRotate, scale: smoothScale }}
+          className="relative flex size-44 items-center justify-center"
+        >
+          <SpinningText
+            radius={8.8}
+            duration={22}
+            className="font-mono text-xl uppercase tracking-[0.16em] text-muted-foreground/85 transition-colors hover:text-foreground"
+          >
+            objects • spaces • lighting • identity • iot • digital •
+          </SpinningText>
+        </motion.div>
+      </motion.div>
       <LampContainer>
         <motion.h1
           initial={{ opacity: 0.5, y: 100 }}
@@ -120,7 +171,7 @@ export function AnimatedBeamDemo() {
   // Brand Palette: Accent Coral -> Primary Indigo
   const beamColors = {
     start: "#ff7b54", // Accent Coral
-    stop: "#4f60f6",  // Primary Indigo
+    stop: "#4f60f6", // Primary Indigo
     path: "rgba(120, 130, 150, 0.18)",
   }
 
@@ -145,13 +196,17 @@ export function AnimatedBeamDemo() {
           <div className="flex flex-row items-center justify-between">
             <Node
               ref={div1Ref}
-              icon={<Boxes className="size-6 text-foreground/80 transition-colors group-hover:text-primary" />}
+              icon={
+                <Boxes className="size-6 text-foreground/80 transition-colors group-hover:text-primary" />
+              }
               label="Objects"
               sublabel="Industrial"
             />
             <Node
               ref={div5Ref}
-              icon={<Sparkles className="size-6 text-foreground/80 transition-colors group-hover:text-primary" />}
+              icon={
+                <Sparkles className="size-6 text-foreground/80 transition-colors group-hover:text-primary" />
+              }
               label="Identity"
               sublabel="Brand"
             />
@@ -161,14 +216,18 @@ export function AnimatedBeamDemo() {
           <div className="flex flex-row items-center justify-between">
             <Node
               ref={div2Ref}
-              icon={<Layers className="size-6 text-foreground/80 transition-colors group-hover:text-primary" />}
+              icon={
+                <Layers className="size-6 text-foreground/80 transition-colors group-hover:text-primary" />
+              }
               label="Spaces"
               sublabel="Spatial"
             />
             <CenterHub ref={div4Ref} />
             <Node
               ref={div6Ref}
-              icon={<Cpu className="size-6 text-foreground/80 transition-colors group-hover:text-primary" />}
+              icon={
+                <Cpu className="size-6 text-foreground/80 transition-colors group-hover:text-primary" />
+              }
               label="Connected"
               sublabel="IoT"
             />
@@ -178,13 +237,17 @@ export function AnimatedBeamDemo() {
           <div className="flex flex-row items-center justify-between">
             <Node
               ref={div3Ref}
-              icon={<Lightbulb className="size-6 text-foreground/80 transition-colors group-hover:text-primary" />}
+              icon={
+                <Lightbulb className="size-6 text-foreground/80 transition-colors group-hover:text-primary" />
+              }
               label="Lighting"
               sublabel="Ambience"
             />
             <Node
               ref={div7Ref}
-              icon={<Globe className="size-6 text-foreground/80 transition-colors group-hover:text-primary" />}
+              icon={
+                <Globe className="size-6 text-foreground/80 transition-colors group-hover:text-primary" />
+              }
               label="Digital"
               sublabel="Systems"
             />
